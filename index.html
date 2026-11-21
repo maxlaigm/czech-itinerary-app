@@ -118,6 +118,8 @@
   .wish .when{font-size:11.5px;color:var(--brass);font-weight:600;margin-bottom:5px;}
   .wish p{margin:0 0 9px;font-size:13.5px;line-height:1.7;color:var(--ink-soft);max-width:56ch;}
 
+  .extras-title{font-family:'Fraunces',serif;font-weight:600;font-size:17px;margin:34px 0 4px;}
+  .extras-sub{font-size:12.5px;color:var(--ink-soft);line-height:1.65;margin:0 0 8px;max-width:58ch;}
   .legend{display:flex;gap:8px 18px;flex-wrap:wrap;margin:34px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft);}
   .legend .item{display:flex;align-items:center;gap:6px;}
   footer{max-width:780px;margin:0 auto;padding:26px 20px 40px;font-size:12px;color:var(--ink-soft);line-height:1.75;}
@@ -153,7 +155,7 @@
 </div>
 
 <footer>
-  行程內容整理自你提供的規劃紀錄（202611_捷克-1.pdf）與已確定的行程安排。時間欄位為建議時段，可依班機、天氣與體力調整；營業時間、票價、班次與聖誕市集日期請於出發前以官方公告為準。地圖連結為 Google Maps 搜尋連結。點選項目右側的圓圈可標記「已到訪」。
+  行程內容整理自你提供的規劃紀錄（202611_捷克-1.pdf）、已確定的行程安排與旅遊點清單（202611.xlsx）。時間欄位為建議時段，可依班機、天氣與體力調整；營業時間、票價、班次與聖誕市集日期請於出發前以官方公告為準。地圖連結為 Google Maps 搜尋連結。點選項目右側的圓圈可標記「已到訪」。
 </footer>
 
 <script>
@@ -168,7 +170,7 @@ function mlink(label, query){
   return `<a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}">${pin}${label}</a>`;
 }
 function bucket(type){
-  if(type==='景點') return 'sight';
+  if(type==='景點' || type==='博物館') return 'sight';
   if(['餐廳','酒吧','咖啡店','點心'].includes(type)) return 'food';
   if(type==='交通') return 'transport';
   return 'stay';
@@ -187,7 +189,7 @@ function routeUrl(d){
 /* ---------- data: days ---------- */
 const DAYS = [
  { day:1, date:'11/28', wd:'六', city:'德勒斯登', title:'老城經典',
-   summary:'從布拉格搭火車前往德勒斯登，下午抵達後以步行為主；傍晚沿易北河看河岸與歌劇院，晚上享用薩克森料理。',
+   summary:'從布拉格搭火車前往德勒斯登，下午抵達後以步行為主；傍晚沿易北河看河岸與歌劇院，晚上享用巴伐利亞料理，再到聖母教堂旁的聖誕市集走走。',
    night:{text:'ARCOTEL HafenCity Dresden（11/28–11/30，2 晚）', query:'ARCOTEL HafenCity Dresden'},
    alerts:['11/28 當天從捷克入境再前往德勒斯登：若抵達布拉格機場，要把入境、領行李與前往火車站的時間算進去，不要只按火車行車時間排程。'],
    stops:[
@@ -197,9 +199,23 @@ const DAYS = [
     {time:'15:00', type:'景點', name:'王子的行列 Fürstenzug', note:'沿著老城步行，欣賞長幅瓷磚壁畫與歷史建築。很適合拍攝人物與建築比例，也適合留意牆面細節。', places:[['Google 地圖','Fürstenzug Dresden']]},
     {time:'16:00', type:'景點', name:'布呂爾平台 Brühlsche Terrasse', note:'沿易北河散步，觀察河岸、橋梁與城市天際線。11 月天黑較早，建議把這段安排在傍晚前。', places:[['Google 地圖','Brühlsche Terrasse Dresden']]},
     {time:'17:00', type:'景點', name:'森柏歌劇院 Semperoper（外觀）', note:'與宮廷教堂、劇院廣場安排在一起拍攝。若想入內參觀，可另查當日導覽或演出時刻。', places:[['Google 地圖','Semperoper Dresden']]},
-    {time:'晚餐', type:'餐廳', name:'Augustiner an der Frauenkirche', note:'適合第一次到德國、想吃經典德式料理。可考慮薩克森酸味燉牛肉（Sauerbraten）、香煎豬腳或馬鈴薯湯，供應到晚上。地址：An der Frauenkirche 13, 01067 Dresden。四人同行建議事先訂位。', places:[['Google 地圖','Augustiner an der Frauenkirche, An der Frauenkirche 13, 01067 Dresden']]}
+    {time:'晚餐', type:'餐廳', name:'Augustiner an der Frauenkirche', note:'巴伐利亞料理餐廳，適合第一次到德國、想吃經典德式料理。可考慮酸味燉牛肉（Sauerbraten）、香煎豬腳或馬鈴薯湯，供應到晚上。地址：An der Frauenkirche 13, 01067 Dresden，就在聖母教堂旁；四人同行建議事先訂位。', places:[['Google 地圖','Augustiner an der Frauenkirche, An der Frauenkirche 13, 01067 Dresden']]},
+    {time:'晚上', type:'點心', name:'聖誕市集：Advent auf dem Neumarkt、Dresdner Striezelmarkt', note:'兩個市集 2026 年都從 11/25 開市，11/28 當天已在營業。Advent auf dem Neumarkt 就在聖母教堂前（Neumarkt／Münzgasse），可與晚餐順路；Dresdner Striezelmarkt 在老城的 Altmarkt，是第 592 屆，2026/11/25–12/24 每日 10:00–21:00（清單上的「591st」是 2025 年的屆次）。Neumarkt 市集的結束日與每日營業時間各來源不一，請以官方公告為準。可試德勒斯登聖誕麵包 Stollen 與熱紅酒。', places:[['Advent auf dem Neumarkt','Advent auf dem Neumarkt Dresden'],['Striezelmarkt（Altmarkt）','Dresdner Striezelmarkt Altmarkt Dresden']]}
    ],
-   foodNote:'晚餐可試薩克森料理，份量通常較足，四人同行很適合分享；下午若想休息，可配一份 Eierschecke（薩克森地區常見的蛋奶蛋糕）與咖啡。'
+   foodNote:'晚餐可試德式傳統料理，份量通常較足，四人同行很適合分享；下午若想休息，可配一份 Eierschecke（薩克森地區常見的蛋奶蛋糕）與咖啡。',
+   extras:[
+    {type:'景點', name:'福斯汽車透明工廠（Gläserne Manufaktur）', note:'位於老城東側、Großer Garten 旁，地址 Lennéstraße 1，搭電車 1、2、8、9、10、12、13 路到 Straßburger Platz 站。2025/12/16 起已停止整車生產，目前以交車中心、研究與體驗空間為主。官方列出營業時間：週一至週五 9:00–18:00、週六 10:00–17:00、週日休息（11/28 為週六、11/29 為週日）。要去的話得另外花交通時間，出發前請再確認開放與導覽。', places:[['Google 地圖','Gläserne Manufaktur Dresden Lennéstraße 1']]},
+    {type:'博物館', name:'軍械博物館（歷史博物館）', note:'名稱依清單原樣列出；實際館名、位置與開放時間請以 Google 地圖與官網確認（德勒斯登許多博物館有固定休館日）。', places:[['Google 地圖','軍械博物館 歷史博物館 Dresden Germany']]},
+    {type:'餐廳', name:'Fettboy 漢堡包餐廳', note:'漢堡餐廳，想換個口味時的選項；營業時間與訂位出發前確認。', places:[['Google 地圖','Fettboy Burger Dresden']]},
+    {type:'餐廳', name:'Saigon Blue Hotel & Restaurant（融合菜式餐廳）', note:'融合菜式餐廳，想吃亞洲風味時的選項；營業時間與訂位出發前確認。', places:[['Google 地圖','Saigon Blue Hotel & Restaurant Dresden']]},
+    {type:'點心', name:'德勒斯登酪農店 Dresdner Molkerei Gebrüder Pfund（Pfunds Molkerei）', note:'以滿牆手繪磁磚聞名、號稱世界最美的乳製品店，可試乳製品與甜點。位於新城區（Neustadt），與 Day 2 的 Kunsthofpassage 同一區，想順路的話可改排 Day 2。', places:[['Google 地圖','Pfunds Molkerei Dresden']]},
+    {type:'超市', name:'Albert 超級市場', note:'採買選項。Albert 是捷克常見的連鎖超市，清單把它標在德勒斯登，請用地圖確認分店位置與營業時間。', places:[['Google 地圖','Albert supermarket Dresden']]},
+    {type:'超市', name:'Billa 超級市場', note:'採買選項。Billa 同樣是捷克／奧地利常見的連鎖超市，請用地圖確認分店位置與營業時間。', places:[['Google 地圖','Billa supermarket Dresden']]},
+    {type:'藥妝店', name:'dm-drogerie markt 藥房', note:'德國常見的藥妝連鎖，保養品、零食與日用品都能買。', places:[['Google 地圖','dm-drogerie markt Dresden']]},
+    {type:'藥妝店', name:'Müller 藥房', note:'德國連鎖藥妝店。', places:[['Google 地圖','Müller Drogeriemarkt Dresden']]},
+    {type:'藥妝店', name:'蔓菲羅 MANUFAKTURA 精品店', note:'捷克品牌，以香皂、保養品與禮品為主；分店位置請以 Google 地圖確認。', places:[['Google 地圖','MANUFAKTURA Dresden']]},
+    {type:'藥妝店', name:'ROSSMANN Drogeriemarkt 藥房', note:'德國常見的藥妝連鎖。', places:[['Google 地圖','ROSSMANN Drogeriemarkt Dresden']]}
+   ]
  },
  { day:2, date:'11/29', wd:'日', city:'德勒斯登', title:'藝術與新城慢旅行',
    summary:'把藝術與城市生活分成上下半場：上午逛老城核心建築與畫廊，下午過河到新城，在藝術庭院與咖啡館之間慢慢走。',
@@ -222,12 +238,21 @@ const DAYS = [
    alerts:['11/30 回程火車：確認列車抵達時間、車站與行李安排；ARCOTEL 退房後，最好先寄放行李再開始觀光。','11/30 為週一，博物館與王宮內展覽常有固定休館日，請事先確認當日是否開放。','抵達布拉格時天色已暗（11 月底日照短），火藥塔與老城廣場以外觀與夜間氛圍為主，不建議安排需要長時間參觀的室內景點；想多走一些，可選較早的回程班次。'],
    stops:[
     {time:'09:00', type:'景點', name:'德勒斯登王宮 Residenzschloss', note:'建議先確認館內展覽、休館日與入場時段，再決定是否參觀。若喜歡歷史收藏，可優先考慮綠穹珍寶館（見備選）；熱門展覽最好預先訂票。', places:[['Google 地圖','Residenzschloss Dresden']]},
-    {time:'12:00', type:'其他', name:'午餐與咖啡，ARCOTEL 退房取行李', note:'在老城區吃午餐、喝咖啡，順便回住宿拿行李。如果下午才離開，可以留一點時間購買巧克力、當地食品或小型紀念品。', places:[['ARCOTEL HafenCity Dresden','ARCOTEL HafenCity Dresden']]},
+    {time:'12:00', type:'其他', name:'午餐與咖啡，ARCOTEL 退房取行李', note:'在老城區吃午餐、喝咖啡，順便回住宿拿行李。咖啡與甜點可選 Schloßcafé Emil Reimann（Schloßstraße 16，老城區的老字號烘焙咖啡館，招牌有德勒斯登蛋糕與夾餡巧克力糖）。如果下午才離開，可以留一點時間購買巧克力、當地食品或小型紀念品。', places:[['Schloßcafé Emil Reimann','Schloßcafé Emil Reimann, Schloßstraße 16, 01067 Dresden'],['ARCOTEL HafenCity Dresden','ARCOTEL HafenCity Dresden']]},
     {time:'15:00–17:00', type:'交通', name:'德勒斯登 → 布拉格（火車）', note:'規劃時段，並非已確認班次；約 2 小時至 2 小時 20 分。若希望傍晚多走一些，可選較早的班次。', places:[['德勒斯登中央車站','Dresden Hauptbahnhof'],['布拉格中央車站','Praha hlavní nádraží']]},
     {time:'傍晚', type:'住宿', name:'入住 Turnkey I Henry\'s Tower Apartments', note:'11/30–12/03，共 3 晚。地址：Jindřišská 2092/28, Prague 1。適合作為老城區的交通與步行基地。四人同行，訂房時要確認是完整公寓還是分房、實際床位數、行李寄放與入住方式。', places:[['Google 地圖','Turnkey I Henry\'s Tower Apartments, Jindřišská 2092/28, Prague 1']]},
     {time:'傍晚', type:'景點', name:'火藥塔 Prašná brána（外觀）', note:'15 世紀的哥德式城門，曾是波希米亞國王加冕遊行進入老城的重要入口，也是皇家路線的起點之一，適合與共和國廣場、老城街區一起走訪。這天以外觀為主，停留 15–40 分鐘。', places:[['Google 地圖','Prašná brána Prague']]},
     {time:'晚上', type:'景點', name:'老城廣場 Staroměstské náměstí', note:'布拉格老城的核心，有天文鐘、市政廳塔樓、提恩教堂與多種風格的歷史建築。這天先熟悉老城街區、看天文鐘與提恩教堂外觀；晚上的廣場與街燈也很適合攝影。若遇到聖誕市集，日期與規模以官方公告為準。建議停留 45–90 分鐘。', places:[['Google 地圖','Staroměstské náměstí Prague']]},
     {time:'晚餐／小酌', type:'酒吧', name:'Staroměstský pivovar U Supa', note:'位於老城皇家路線上的釀酒餐館，官方介紹釀酒歷史可追溯至 1431 年，也提供現代風格的捷克料理。可試啤酒品飲組合、捷克香腸 Talián、豬腳與傳統啤酒小食，建議停留 60–90 分鐘。若當天想吃完整晚餐，也可改選 Lokál（見備選）。地址：Celetná 563/22。', places:[['Google 地圖','Staroměstský pivovar U Supa, Celetná 563/22, Prague 1']]}
+   ],
+   extras:[
+    {type:'餐廳', name:'Pork\'s Mostecká 餐廳', note:'清單中 11/30 的用餐選項之一；營業時間與訂位請出發前確認。', places:[['Google 地圖','Pork\'s Mostecká Prague']]},
+    {type:'餐廳', name:'U Glaubiců 捷克餐廳', note:'傳統捷克餐廳，11/30 的用餐選項之一；營業時間與訂位請出發前確認。', places:[['Google 地圖','U Glaubiců Prague']]},
+    {type:'餐廳', name:'Café Savoy 餐廳', note:'咖啡館兼餐廳，11/30 用餐或休息的選項之一；營業時間與訂位請出發前確認。', places:[['Google 地圖','Café Savoy Prague']]},
+    {type:'超市', name:'Lidl 超級市場', note:'採買選項，補給水、零食與早餐。', places:[['Google 地圖','Lidl Prague Old Town']]},
+    {type:'藥妝店', name:'波丹妮 化妝品店（Botanicus）', note:'捷克天然保養品牌，適合買伴手禮。', places:[['Google 地圖','Botanicus Prague Old Town']]},
+    {type:'藥妝店', name:'Manufaktura - Original Czech Tradition 化妝品店', note:'捷克傳統風格的香皂與保養品牌，也適合買伴手禮。', places:[['Google 地圖','Manufaktura Prague Old Town']]},
+    {type:'時裝店', name:'COS 時裝店', note:'', places:[['Google 地圖','COS Prague']]}
    ]
  },
 
@@ -297,6 +322,26 @@ const DAYS = [
 
 /* ---------- data: candidates ---------- */
 const WISH = [
+ { group:'布拉格 ・ 餐廳備選', sub:'', items:[
+   {name:'Lokál Dlouhááá', type:'餐廳', tag:'捷克家常菜與生啤酒', when:'適合 11/30（一）晚餐', note:'以傳統捷克菜與啤酒文化為核心的酒館，氣氛熱鬧、桌距偏近，是日常餐館感而非精緻餐廳。可試生啤酒、捷克燉牛肉或豬肉料理與傳統配菜。熱門時段較吵、較擁擠；四人同行建議先確認是否能訂位。地址：Dlouhá 33, 110 00 Prague 1。', q:'Lokál Dlouhááá, Dlouhá 33, Prague 1'},
+   {name:'Kantýna', type:'餐廳', tag:'肉舖式餐廳與牛排', when:'適合 12/02（三）午餐，或 12/01（二）晚餐', note:'把傳統肉舖與餐廳結合，場地位於歷史建築內，主打牛肉、豬肉、牛排與當日供應的肉類料理。菜單依當日肉品調整，點餐方式與一般桌邊服務不同；四人一起用餐，先看展示或詢問店員會比較容易選擇。地址：Politických vězňů 1511/5。', q:'Kantýna, Politických vězňů 1511/5, Prague 1'},
+   {name:'Restaurant FOOD LAB', type:'餐廳', tag:'現代風格餐飲', when:'適合 12/01（二）晚餐', note:'可作為與傳統捷克酒館不同的選擇，適合多人聊天的現代餐飲體驗。目前尚未用可靠的官方資料確認旅行日期的完整菜單、營業時間與最新評價，訂位前請核對官方網站或 Google 地圖上的店名與地址。', q:'Restaurant FOOD LAB Prague'}
+ ]},
+ { group:'布拉格 ・ 住宿備選', sub:'目前已確定住 Turnkey I Henry\'s Tower Apartments（11/30–12/03）與 Hotel Nerudova 211（12/03–12/05）；以下是清單中的其他候選，房況、價格與位置請另行確認。', items:[
+   {name:'Motel One Prague–Florentinum（布拉格一號飯店）', type:'住宿', tag:'備選住宿', note:'清單中的備選住宿。', q:'Motel One Prague-Florentinum'},
+   {name:'Hotel Clement（克萊門特飯店）', type:'住宿', tag:'備選住宿', note:'清單中的備選住宿。', q:'Hotel Clement Prague'},
+   {name:'Hotel Cosmopolitan Prague（布拉格大都會飯店）', type:'住宿', tag:'備選住宿', note:'清單中的備選住宿。', q:'Hotel Cosmopolitan Prague'},
+   {name:'NELIS I Boutique Apartments in Old Town', type:'住宿', tag:'備選住宿', note:'老城區的精品公寓，清單中的備選住宿。', q:'NELIS I Boutique Apartments in Old Town Prague'}
+ ]},
+ { group:'布拉格 ・ 購物與市集', sub:'', items:[
+   {name:'香皂購買行程', type:'選物店', tag:'伴手禮', note:'MANUFAKTURA 小盒裝／單顆香皂，每人一個、挑不同香味，體積小、重量不重、不怕摔，官方店本身也提供禮品包裝。原建議在庫倫洛夫購買，目前行程未含庫倫洛夫，可改在布拉格老城區的分店購買，出發前先查詢營業資訊。其他伴手禮靈感：蜂蜜、巧克力、茶、玻璃、木製品、文具、咖啡、啤酒周邊。', q:'MANUFAKTURA Prague Old Town'},
+   {name:'哈維爾市集 Havelské tržiště', type:'點心', tag:'市集', note:'位於布拉格老城的市集，可買水果、點心與紀念品，適合在布拉格期間（Day 3–7）順路逛。清單原本把它標在 Day 1／德勒斯登，但市集在布拉格，所以先放在備選，等你決定排哪一天。營業時間出發前確認。', q:'Havelské tržiště Prague'}
+ ]},
+ { group:'規劃紀錄提到、不在目前清單', sub:'這些是 PDF 規劃時提到、但不在 202611.xlsx 清單內的地點，先保留在這裡，不需要時可以忽略。', items:[
+   {name:'綠穹珍寶館 Grünes Gewölbe', type:'景點', tag:'選擇性', when:'可排 11/30 上午（10:00–12:00）', note:'以精緻工藝、珠寶與珍寶收藏聞名。如果前一天已看了很多藝術品，也可改成王宮周邊散步，不必為了打卡硬排。', q:'Grünes Gewölbe Dresden'},
+   {name:'奧古斯都橋 Augustusbrücke', type:'景點', tag:'時間允許時', when:'可排 11/30 午後 13:30', note:'從橋上回望老城，是很好的城市全景拍攝點。若行李、火車或巴士時間較早，就不必勉強安排。', q:'Augustusbrücke Dresden'},
+   {name:'佩特任山 Petřín', type:'景點', tag:'12/04 下午選項', note:'體力與天氣允許時，可選擇佩特任山一帶或河岸散步；天候不佳就改咖啡館或室內展覽（已列入 Day 7 下午）。', q:'Petřín Lookout Tower Prague'}
+ ]},
  { group:'德勒斯登 ・ 其他住宿候選', sub:'已確定住 ARCOTEL HafenCity Dresden（11/28–11/30）；以下是規劃時整理的其他候選，目前未採用，僅供參考。', items:[
    {name:'Staycity Dresden City Centre', type:'住宿', tag:'首選', note:'公寓式住宿，有廚房設備，適合四人同行；晚上可買麵包、起司或飲料回住宿休息。訂房時確認房型可住人數，以及是否能安排四人同住一間公寓。地址：Kleine Brüdergasse 1-5, 01067 Dresden。', q:'Staycity Apartments Dresden City Centre, Kleine Brüdergasse 1-5, 01067 Dresden'},
    {name:'Leonardo Hotel Dresden Altstadt', type:'住宿', tag:'飯店型', note:'位於老城西側，適合以步行探索老城為主的旅客。四人可比較兩間雙人房的總價，並確認是否含早餐。地址：Magdeburger Str. 1a。', q:'Leonardo Hotel Dresden Altstadt, Magdeburger Str. 1a, 01067 Dresden'},
@@ -304,22 +349,8 @@ const WISH = [
    {name:'Premier Inn Dresden City Zentrum', type:'住宿', tag:'區位佳', note:'位於市中心，步行可到老城主要景點，適合希望減少交通轉乘的旅客。地址：Dr.-Külz-Ring 15A。', q:'Premier Inn Dresden City Zentrum, Dr.-Külz-Ring 15A, Dresden'},
    {name:'a&o Dresden Hauptbahnhof', type:'住宿', tag:'預算／車站', note:'距離中央車站較近，適合優先考慮預算與車站交通；四人可比較家庭房與兩間雙人房的價格。地址：Strehlener Straße 10。', q:'a&o Dresden Hauptbahnhof, Strehlener Straße 10, Dresden'},
    {name:'Courtyard by Marriott Dresden', type:'住宿', tag:'新城區', note:'位於 Neustadt，較安靜且靠近咖啡館與新城街區；前往老城需搭交通工具或步行較長距離。', q:'Courtyard by Marriott Dresden'}
- ]},
- { group:'德勒斯登 ・ 景點備選', sub:'', items:[
-   {name:'綠穹珍寶館 Grünes Gewölbe', type:'景點', tag:'選擇性', when:'可排 11/30 上午（10:00–12:00）', note:'以精緻工藝、珠寶與珍寶收藏聞名。如果前一天已看了很多藝術品，也可改成王宮周邊散步，不必為了打卡硬排。', q:'Grünes Gewölbe Dresden'},
-   {name:'奧古斯都橋 Augustusbrücke', type:'景點', tag:'時間允許時', when:'可排 11/30 午後 13:30', note:'從橋上回望老城，是很好的城市全景拍攝點。若行李、火車或巴士時間較早，就不必勉強安排。', q:'Augustusbrücke Dresden'}
- ]},
- { group:'布拉格 ・ 餐廳備選', sub:'', items:[
-   {name:'Lokál Dlouhááá', type:'餐廳', tag:'捷克家常菜與生啤酒', when:'適合 11/30（一）晚餐', note:'以傳統捷克菜與啤酒文化為核心的酒館，氣氛熱鬧、桌距偏近，是日常餐館感而非精緻餐廳。可試生啤酒、捷克燉牛肉或豬肉料理與傳統配菜。熱門時段較吵、較擁擠；四人同行建議先確認是否能訂位。地址：Dlouhá 33, 110 00 Prague 1。', q:'Lokál Dlouhááá, Dlouhá 33, Prague 1'},
-   {name:'Kantýna', type:'餐廳', tag:'肉舖式餐廳與牛排', when:'適合 12/02（三）午餐，或 12/01（二）晚餐', note:'把傳統肉舖與餐廳結合，場地位於歷史建築內，主打牛肉、豬肉、牛排與當日供應的肉類料理。菜單依當日肉品調整，點餐方式與一般桌邊服務不同；四人一起用餐，先看展示或詢問店員會比較容易選擇。地址：Politických vězňů 1511/5。', q:'Kantýna, Politických vězňů 1511/5, Prague 1'},
-   {name:'Restaurant FOOD LAB', type:'餐廳', tag:'現代風格餐飲', when:'適合 12/01（二）晚餐', note:'可作為與傳統捷克酒館不同的選擇，適合多人聊天的現代餐飲體驗。目前尚未用可靠的官方資料確認旅行日期的完整菜單、營業時間與最新評價，訂位前請核對官方網站或 Google 地圖上的店名與地址。', q:'Restaurant FOOD LAB Prague'}
- ]},
- { group:'布拉格 ・ 景點與伴手禮備選', sub:'', items:[
-   {name:'佩特任山 Petřín', type:'景點', tag:'12/04 下午選項', note:'體力與天氣允許時，可選擇佩特任山一帶或河岸散步；天候不佳就改咖啡館或室內展覽（已列入 Day 7 下午）。', q:'Petřín Lookout Tower Prague'},
-   {name:'MANUFAKTURA 小盒裝／單顆香皂', type:'其他', tag:'伴手禮', note:'每人一個、挑不同香味，體積小、重量不重、不怕摔，官方店本身也提供禮品包裝。原建議在庫倫洛夫購買，目前行程未含庫倫洛夫，可改在布拉格老城區的分店購買，出發前先查詢營業資訊。其他伴手禮靈感：蜂蜜、巧克力、茶、玻璃、木製品、文具、咖啡、啤酒周邊。', q:'MANUFAKTURA Prague Old Town'}
  ]}
 ];
-
 /* ---------- state ---------- */
 let keys = [];
 function isOn(k){ return sget(k)==='1'; }
@@ -344,6 +375,17 @@ function stopHtml(d, s, i){
   </div>`;
 }
 
+function extraHtml(d, s, i){
+  const k = `d${d.day}-x${i}`; keys.push(k);
+  const b = bucket(s.type);
+  const links = (s.places||[]).map(p=>mlink(p[0],p[1])).join('');
+  return `<div class="stop${isOn(k)?' done':''}" data-k="${k}">
+    <div class="rail"><span class="cat"><i class="ico ico-${b}"></i>${s.type}</span></div>
+    <div class="stop-body"><h3>${s.name}</h3>${s.note?`<p>${s.note}</p>`:''}${links?`<div class="links">${links}</div>`:''}</div>
+    <button class="check${isOn(k)?' on':''}" data-k="${k}" aria-label="標記已到訪"></button>
+  </div>`;
+}
+
 function renderDays(){
   const root = document.getElementById('panels');
   DAYS.forEach(d=>{
@@ -361,7 +403,8 @@ function renderDays(){
         ${ru?`<a class="route-btn" target="_blank" rel="noopener" href="${ru}">${pin}開啟當日步行路線</a>`:'<div style="height:12px"></div>'}
       </div>
       ${d.stops.map((s,i)=>stopHtml(d,s,i)).join('')}
-      ${d.foodNote?`<div class="food-note">${d.foodNote}</div>`:''}`;
+      ${d.foodNote?`<div class="food-note">${d.foodNote}</div>`:''}
+      ${(d.extras&&d.extras.length)?`<div class="extras-title">當日口袋名單</div><div class="extras-sub">清單中同一天的其他地點（餐廳、點心、採買、博物館等），沒有排進時段，可隨興選用；有些需要另外花交通時間。</div>${d.extras.map((s,i)=>extraHtml(d,s,i)).join('')}`:''}`;
     root.appendChild(el);
   });
 }
@@ -375,7 +418,7 @@ const TODOS = [
   '核對 Hotel Nerudova 211 的房型、行李寄放與接送車停靠位置',
   '預約特色晚餐：Augustiner an der Frauenkirche 或 Pulverturm（四人建議訂位）',
   '確認布拉格城堡、聖維特主教座堂與兩座橋塔的冬季開放時間',
-  '確認 2026 年德勒斯登與布拉格聖誕市集的實際開放日期',
+  '確認布拉格聖誕市集的 2026 年實際開放日期（德勒斯登兩個市集已查到 11/25 起開市）',
   '確認 Kuchyň、U Medvídků、Café Imperial（及備選 Lokál、FOOD LAB）的四人訂位與營業時間',
   '確認 Angelato 冬季營業時間'
 ];
@@ -416,7 +459,7 @@ function renderInfo(){
       <li><b>茨溫格宮：</b>外部庭院冬季每日 06:00–22:00，館內展覽另行確認。</li>
       <li><b>餐飲：</b>Sophienkeller 週二至週六 11:00–23:00、週日 11:00–22:00、週一休息；Café Glocke 平日 09:00–18:00、週末 08:30–18:00；Angelato Můstek 分店 11–12 月通常 11:00–20:00；Café Imperial 每日 07:00–23:00；U Zlatého tygra 每日 15:00–23:00（電話訂位）。</li>
       <li><b>休館日：</b>不要假設所有博物館每天都開放，規劃前先確認。</li>
-      <li><b>聖誕市集：</b>不要把前一年度的日期直接套用，以 2026 年官方公告為準。</li>
+      <li><b>聖誕市集：</b>德勒斯登 Dresdner Striezelmarkt（Altmarkt）2026/11/25–12/24，每日 10:00–21:00，是第 592 屆（清單上的「591st」是 2025 年的屆次）；Advent auf dem Neumarkt（聖母教堂前）2026 年同樣 11/25 起開市，結束日與每日時間各來源不一，以官方公告為準。布拉格市集日期尚未查到，請以 2026 年官方公告為準，不要套用前一年。</li>
       <li><b>市內交通：</b>德勒斯登老城核心景點以步行為主，往返新城或車站時再考慮電車。</li>
     </ul>
   </div>
